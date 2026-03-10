@@ -1,0 +1,13 @@
+FROM oven/bun:1.3.10
+
+WORKDIR /app
+
+# Install dependencies required to load Prisma config and run migrations.
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
+
+# Copy only files needed by Prisma migrate deploy.
+COPY prisma ./prisma
+COPY prisma.config.ts ./prisma.config.ts
+
+CMD ["bunx", "prisma", "migrate", "deploy", "--config=./prisma.config.ts"]
