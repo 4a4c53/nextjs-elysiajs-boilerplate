@@ -1,7 +1,7 @@
 'use server'
 
 import { headers } from 'next/headers'
-import { forbidden } from 'next/navigation'
+import { unauthorized } from 'next/navigation'
 import { cache } from 'react'
 
 import type { AuthContextType, GetSessionResponse, SessionType } from '@/types/auth'
@@ -12,7 +12,7 @@ const getSession: () => Promise<SessionType> = cache(async () => {
 	const res = await auth.api.getSession({ headers: await headers() })
 
 	if (!res) {
-		forbidden()
+		unauthorized()
 	}
 
 	return res.session
@@ -22,7 +22,7 @@ const getAuthSession: () => Promise<AuthContextType> = cache(async () => {
 	const res = await auth.api.getSession({ headers: await headers() })
 
 	if (!res) {
-		forbidden()
+		unauthorized()
 	}
 
 	return res
@@ -32,7 +32,7 @@ const getUser: () => Promise<GetSessionResponse> = cache(async () => {
 	const res = await auth.api.getSession({ headers: await headers() })
 
 	if (!res) {
-		forbidden()
+		unauthorized()
 	}
 
 	return {
