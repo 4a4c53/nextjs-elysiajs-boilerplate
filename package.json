@@ -23,6 +23,8 @@
 		"env:init": "bun run ./scripts/env-init.ts",
 		"db:up": "docker compose -f docker/compose.dev.yml up -d",
 		"db:down": "docker compose -f docker/compose.dev.yml down",
+		"prod:up": "docker compose -f docker/compose.prod.yml up -d",
+		"build:docker": "docker buildx build -t $npm_package_name:$npm_package_version .",
 		"auth:generate": "bunx --bun auth@latest generate --config ./src/core/auth/server.ts",
 		"auth:migrate": "bunx --bun auth@latest migrate --config ./src/core/auth/server.ts"
 	},
