@@ -4,6 +4,7 @@ import { createEnv } from '@t3-oss/env-nextjs'
 import { z } from 'zod'
 
 const env = createEnv({
+	skipValidation: !!processEnv.SKIP_ENV_VALIDATION,
 	server: {
 		DATABASE_URL: z.url().startsWith('postgresql://'),
 		AUTH_SECRET: z.string().min(32, 'AUTH_SECRET must be at least 32 characters'),
