@@ -1,0 +1,24 @@
+{
+	"$schema": "https://ui.shadcn.com/schema.json",
+	"style": "base-lyra",
+	"rsc": true,
+	"tsx": true,
+	"tailwind": {
+		"config": "",
+		"css": "src/frontend/shared/styles/globals.css",
+		"baseColor": "gray",
+		"cssVariables": true,
+		"prefix": ""
+	},
+	"iconLibrary": "tabler",
+	"aliases": {
+		"components": "@/frontend/shared/components",
+		"utils": "@/frontend/shared/lib/class-name.ts",
+		"ui": "@/frontend/shared/ui",
+		"lib": "@/frontend/shared/lib",
+		"hooks": "@/frontend/shared/hooks"
+	},
+	"menuColor": "default",
+	"menuAccent": "subtle",
+	"registries": {}
+}

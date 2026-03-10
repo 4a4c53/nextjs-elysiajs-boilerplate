@@ -1,0 +1,108 @@
+@layer components {
+	.toast-styled {
+		--border-radius: var(--radius);
+		--normal-bg: oklch(from var(--color-popover-foreground) l c h / 0.05);
+		--normal-border: oklch(from var(--color-popover-foreground) l c h / 0.1);
+		--normal-text: oklch(from var(--color-popover-foreground) calc(l * 1) c h);
+		--normal-description: oklch(from var(--color-popover-foreground) calc(l * 0.45) c h);
+
+		backdrop-filter: blur(12px);
+
+		> [data-content] > [data-description] {
+			/* biome-ignore lint/complexity/noImportantStyles: override needed for default toast description color */
+			color: var(--normal-description) !important;
+		}
+
+		[data-theme="dark"] & {
+			--normal-description: oklch(from var(--color-popover-foreground) calc(l * 0.9) c h);
+		}
+
+		/* Success toast */
+		&[data-type="success"] {
+			--normal-bg: oklch(from var(--color-success) l c h / 0.15);
+			--normal-border: oklch(from var(--color-success) l c h / 0.5);
+			--normal-text: oklch(from var(--color-success) calc(l * 0.35) c h);
+			--normal-description: oklch(from var(--color-success) calc(l * 0.45) c h);
+
+			> [data-icon] {
+				color: var(--color-success);
+			}
+
+			> [data-content] > [data-description] {
+				/* biome-ignore lint/complexity/noImportantStyles: override needed for success toast description color */
+				color: var(--normal-description) !important;
+			}
+		}
+
+		[data-theme="dark"] &[data-type="success"] {
+			--normal-text: oklch(from var(--color-success) calc(l * 1.8) c h);
+			--normal-description: oklch(from var(--color-success) calc(l * 1.5) c h);
+		}
+
+		/* Error toast */
+		&[data-type="error"] {
+			--normal-bg: oklch(from var(--color-error) l c h / 0.15);
+			--normal-border: oklch(from var(--color-error) l c h / 0.5);
+			--normal-text: oklch(from var(--color-error) calc(l * 0.35) c h);
+			--normal-description: oklch(from var(--color-error) calc(l * 0.45) c h);
+
+			> [data-icon] {
+				color: var(--color-error);
+			}
+
+			> [data-content] > [data-description] {
+				/* biome-ignore lint/complexity/noImportantStyles: override needed for error toast description color */
+				color: var(--normal-description) !important;
+			}
+		}
+
+		[data-theme="dark"] &[data-type="error"] {
+			--normal-text: oklch(from var(--color-error) calc(l * 1.8) c h);
+			--normal-description: oklch(from var(--color-error) calc(l * 1.5) c h);
+		}
+
+		/* Warning toast */
+		&[data-type="warning"] {
+			--normal-bg: oklch(from var(--color-warning) l c h / 0.15);
+			--normal-border: oklch(from var(--color-warning) l c h / 0.5);
+			--normal-text: oklch(from var(--color-warning) calc(l * 0.35) c h);
+			--normal-description: oklch(from var(--color-warning) calc(l * 0.45) c h);
+
+			> [data-icon] {
+				color: var(--color-warning);
+			}
+
+			> [data-content] > [data-description] {
+				/* biome-ignore lint/complexity/noImportantStyles: override needed for warning toast description color */
+				color: var(--normal-description) !important;
+			}
+		}
+
+		[data-theme="dark"] &[data-type="warning"] {
+			--normal-text: oklch(from var(--color-warning) calc(l * 1.8) c h);
+			--normal-description: oklch(from var(--color-warning) calc(l * 1.5) c h);
+		}
+
+		/* Info toast */
+		&[data-type="info"] {
+			--normal-bg: oklch(from var(--color-info) l c h / 0.15);
+			--normal-border: oklch(from var(--color-info) l c h / 0.5);
+			--normal-text: oklch(from var(--color-info) calc(l * 0.35) c h);
+			--normal-description: oklch(from var(--color-info) calc(l * 0.45) c h);
+
+			> [data-icon] {
+				color: var(--color-info);
+			}
+
+			> [data-content] > [data-description] {
+				/* biome-ignore lint/complexity/noImportantStyles: override needed for i--toast-info toast description color */
+				color: var(--normal-description) !important;
+			}
+		}
+
+		[data-theme="dark"] &[data-type="info"] {
+			--normal-text: oklch(from var(--color-info) calc(l * 1.8) c h);
+			--normal-description: oklch(from var(--color-info) calc(l * 1.5) c h);
+		}
+	}
+}
