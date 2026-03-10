@@ -1,0 +1,82 @@
+name: boilerplate
+
+services:
+  postgres:
+    container_name: boilerplate_postgres
+    image: postgres:17
+    environment:
+      POSTGRES_DB: app_db
+      POSTGRES_USER: app_db_user
+      POSTGRES_PASSWORD: app_db_pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+    healthcheck:
+      test: ['CMD', 'pg_isready']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - backend
+
+  migrate:
+    container_name: boilerplate_migrate
+    build:
+      context: ../
+      dockerfile: Dockerfile.migrate
+    environment:
+      DATABASE_URL: postgresql://app_db_user:app_db_pass@postgres:5432/app_db
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - backend
+
+  app:
+    container_name: boilerplate_app
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    ports:
+      - '${PORT:-3000}:3000'
+    environment:
+      NODE_ENV: production
+      AUTH_URI: http://localhost:${PORT:-3000}
+      AUTH_SECRET: yXrQZAWi9Lg1is+B1mwoX6BadeRhLpex0Y1LSlq5lyM=
+      DATABASE_URL: postgresql://app_db_user:app_db_pass@postgres:5432/app_db
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    restart: always
+    networks:
+      - backend
+
+  studio:
+    container_name: boilerplate_studio
+    image: node:24-alpine3.23
+    working_dir: /usr/src/app
+    volumes:
+      - ../:/usr/src/app
+    command: npx prisma studio --url="postgresql://app_db_user:app_db_pass@postgres:5432/app_db" --config=./prisma.config.ts --port 5555 --browser none
+    ports: 
+      - "5555:5555"
+    networks: 
+      - backend
+    depends_on: 
+      postgres: 
+        condition: service_healthy 
+      app: 
+        condition: service_started 
+
+volumes:
+  postgres_data:
+    name: boilerplate_postgres_data
+    driver: local
+
+networks:
+  backend:
+    name: boilerplate_network
+    driver: bridge
