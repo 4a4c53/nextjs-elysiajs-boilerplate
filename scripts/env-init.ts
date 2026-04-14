@@ -3,38 +3,49 @@ import { randomBytes } from 'node:crypto'
 import { copyFileSync, existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { env } from 'node:process'
 
+// Values computed from the npm environment.
+// Only add here what cannot be expressed as a static value in .env.example
 const POSTGRES_USER = env.npm_package_config_postgres_user || 'postgres'
 const POSTGRES_PASSWORD = env.npm_package_config_postgres_password || 'postgres'
 const POSTGRES_DB = env.npm_package_config_postgres_db || 'postgres'
 
-// Backup existing .env
-if (existsSync('.env')) {
-	const TIMESTAMP = new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14)
-	copyFileSync('.env', `.env.bak.${TIMESTAMP}`)
-	log(`\x1b[32m✓ Backup created: .env.bak.${TIMESTAMP}`)
+const computed: Record<string, string> = {
+	APP_NAME: env.npm_package_name || 'app',
+	DATABASE_URL: `postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_DB}`,
 }
 
-// Read .env.example
-let content = readFileSync('.env.example', 'utf8')
+// Backup the existing .env file
+if (existsSync('.env')) {
+	const timestamp = new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14)
+	copyFileSync('.env', `.env.bak.${timestamp}`)
+	log(`\x1b[32m✓ Backup created: .env.bak.${timestamp}`)
+}
 
-// Remove comments and empty lines
-content = content
-	.split('\n')
-	.filter((line) => !/^\s*#/.test(line) && line.trim())
-	.map((line) => line.replace(/#.*$/, '').trim())
-	.join('\n')
+// Process .env.example line by line
+// - Lines with "openssl rand -base64 32" in the comment -> auto-generated value
+// - Lines with a key in computed -> value computed from npm config
+// - Remaining lines -> value as defined in .env.example
+const lines = readFileSync('.env.example', 'utf8').split('\n')
 
-// Generate secret using Node.js crypto (cross-platform)
-const SECRET = randomBytes(32).toString('base64')
+const output = lines
+	.filter((line) => !/^\s*#/.test(line))
+	.map((line) => {
+		const key = line.match(/^([A-Z_]+)=/)?.[1]
+		if (!key) return null
 
-// Replace values
-content = content.replace(/^AUTH_SECRET=.*/m, `AUTH_SECRET="${SECRET}"`)
-content = content.replace(/^AUTH_URL=.*/m, `AUTH_URL="http://localhost:3000"`)
+		if (/openssl rand -base64 32/.test(line)) {
+			return `${key}="${randomBytes(32).toString('base64')}"`
+		}
 
-content = content.replace(
-	/^DATABASE_URL=.*/m,
-	`DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_DB}"`,
-)
+		if (key in computed) {
+			return `${key}="${computed[key]}"`
+		}
 
-writeFileSync('.env', content)
+		// Use the default value from .env.example (without the comment)
+		const value = line.replace(/#.*$/, '').split('=')[1]?.trim() ?? ''
+		return `${key}="${value}"`
+	})
+	.filter((line) => line !== null)
+
+writeFileSync('.env', output.join('\n'))
 log('\x1b[32m✓ .env file created successfully')
