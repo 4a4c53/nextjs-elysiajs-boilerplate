@@ -2,9 +2,9 @@ import { pino } from 'pino'
 
 import type { LoggerOptions, Logger as PinoLogger } from 'pino'
 
-import { APP } from '@/shared/constants/app'
 import { env } from '@/core/env'
 import { serializeError } from '@/core/logging/utils/serialize-error'
+import { APP } from '@/shared/constants/app'
 
 /**
  * Structured logger implementation using Pino

@@ -25,4 +25,4 @@ type NavigationSubItem = Prettify<
 	}
 >
 
-export type { NavigationType, NavigationSubItem }
+export type { NavigationSubItem, NavigationType }

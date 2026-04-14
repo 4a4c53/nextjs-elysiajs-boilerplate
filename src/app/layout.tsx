@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 
-import '@/frontend/shared/styles/globals.css'
+import '@/shared/styles/globals.css'
 
 import type { ChildrenProps } from '@/types/children'
 
-import { Toaster } from '@/frontend/shared/ui/sonner'
+import { Toaster } from '@/shared/ui/sonner'
 
-import { INTER, JETBRAINS_MONO, SPACE_GROTESK } from '@/frontend/base/fonts'
-import { Providers } from '@/frontend/base/providers'
+import { INTER, JETBRAINS_MONO, SPACE_GROTESK } from '@/fonts'
+import { Providers } from '@/providers'
 
 export const metadata: Metadata = {
 	title: 'Create Next App',

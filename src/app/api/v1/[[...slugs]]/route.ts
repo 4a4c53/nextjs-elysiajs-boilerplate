@@ -1,1 +1,1 @@
-export { GET, POST } from '@/backend/v1/elysia'
+export { GET, POST } from '@/server/v1'

@@ -7,12 +7,12 @@ import {
 	BreadcrumbList,
 	BreadcrumbPage,
 	BreadcrumbSeparator,
-} from '@/frontend/shared/ui/breadcrumb'
-import { Separator } from '@/frontend/shared/ui/separator'
-import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/frontend/shared/ui/sidebar'
+} from '@/shared/ui/breadcrumb'
+import { Separator } from '@/shared/ui/separator'
+import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/shared/ui/sidebar'
 
-import { getUser } from '@/frontend/features/auth/services/get-session'
-import { AppSidebar } from '@/frontend/shared/components/sidebar/app-sidebar'
+import { getUser } from '@/features/auth/services/get-session'
+import { AppSidebar } from '@/shared/components/sidebar/app-sidebar'
 
 export default function DashboardLayout({ children }: ChildrenProps) {
 	const user = getUser()

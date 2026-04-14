@@ -1,5 +1,7 @@
-import { name, version } from '../../../package.json' with { type: 'json' }
-import { env } from '../../core/env'
+import { env } from '@/core/env'
+import packageJson from '../../../package.json' with { type: 'json' }
+
+const { name, version } = packageJson
 
 const APP = {
 	NAME: name,
