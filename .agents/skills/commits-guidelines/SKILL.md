@@ -1,5 +1,5 @@
 ---
-name: conventional-commits-guidelines
+name: commits-guidelines
 description: Create commits following Strict Conventional Commits format with emojis, enforcing clear scope inference, concise subjects, and detailed bodies. Use when making git commits to ensure consistency across the project.
 ---
 
