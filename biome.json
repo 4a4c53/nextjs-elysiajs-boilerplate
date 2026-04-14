@@ -236,7 +236,7 @@
 							":BLANK_LINE:",
 							{ "type": true, "source": [":PACKAGE:", ":ALIAS:", ":PATH:"] },
 							":BLANK_LINE:",
-							"@/frontend/shared/ui/**",
+							"@/shared/ui/**",
 							":BLANK_LINE:",
 							[":ALIAS:", ":PATH:"]
 						]

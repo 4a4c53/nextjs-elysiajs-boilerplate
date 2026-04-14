@@ -1,6 +1,6 @@
 import type { TablerIcon } from '@tabler/icons-react'
 import type { ComponentType, SVGProps } from 'react'
-import type { ICONS } from '@/frontend/shared/constants/icons'
+import type { ICONS } from '@/shared/constants/icons'
 
 /**
  * Represents a valid icon component type.
@@ -19,4 +19,4 @@ type IconType = Record<string, IconComponentType>
  */
 type IconNameType = IconComponentType | keyof typeof ICONS
 
-export type { IconType, IconNameType }
+export type { IconNameType, IconType }

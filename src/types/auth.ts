@@ -7,4 +7,4 @@ type AuthContextType = typeof auth.$Infer.Session
 
 type GetSessionResponse = Prettify<Omit<UserType, 'emailVerified' | 'createdAt' | 'updatedAt'>>
 
-export type { SessionType, UserType, AuthContextType, GetSessionResponse }
+export type { AuthContextType, GetSessionResponse, SessionType, UserType }
