@@ -11,7 +11,7 @@ import { APP } from '@/shared/constants/app'
 const auth = betterAuth({
 	appName: APP.NAME,
 	baseURL: env.AUTH_URL,
-	basePath: '/api/v1/auth',
+	basePath: '/api/v1/_internal/auth',
 	database: prismaAdapter(prisma, {
 		provider: 'postgresql',
 	}),
